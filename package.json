@@ -1,6 +1,6 @@
 {
 	"name": "xin-react-scripts",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "scripts for xin-react",
 	"keywords": [
 		"xin-react-scripts"
@@ -19,6 +19,8 @@
 		"babel-eslint": "7.2.3",
 		"babel-jest": "20.0.3",
 		"babel-loader": "7.1.2",
+		"babel-plugin-import": "^1.5.0",
+		"babel-preset-env": "^2.0.0-beta.1",
 		"babel-preset-react-app": "^3.1.1",
 		"babel-runtime": "6.26.0",
 		"case-sensitive-paths-webpack-plugin": "2.1.1",
