@@ -3,7 +3,7 @@
 'use strict';
 //spawn跨平台的一个包
 const spawn = require('cross-spawn');
-const args = process.args.slice(2);
+const args = process.argv.slice(2);
 var i = args.findIndex(
     x => x === 'build' || x === 'update' || x === 'start' || x === 'test' || x === 'mock'
 );
@@ -44,6 +44,6 @@ switch (command) {
     }
     default:
       console.log('Unknown command "' + command + '".');
-      console.log('Perhaps you need to update mays-scripts?');
+      console.log('Perhaps you need to update xin-react-scripts?');
       break;
   }
