@@ -1,27 +1,30 @@
 {
-  "name": "generator-mays",
+  "name": "xin-scripts",
   "version": "1.0.0",
-  "description": "",
   "keywords": [
-    "yeoman-generator"
+    "xin-scripts"
   ],
-  "files":[
-	  "app"
-  ],
-  "main": "app/index.js",
+  "bin": {
+    "xin-react-scripts": "./index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "mays": "^1.0.0",
-    "yo": "^2.0.1"
+
   },
   "dependencies": {
-    "colors": "^1.1.2",
-    "inquirer": "^5.1.0",
-    "npm-updater": "^3.0.3",
-    "yeoman-generator": "^2.0.3"
-  }
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sven36/MayCli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sven36/MayCli/issues"
+  },
+  "homepage": "https://github.com/sven36/MayCli#readme",
+  "description": ""
 }
