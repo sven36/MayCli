@@ -106,6 +106,7 @@ module.exports = {
 	appPublic: resolveApp('public'),
 	appHtml: resolveApp('public/index.html'),
 	appIndexJs: resolveApp('src/pages/index/index.js'),
+	appServerIndexJs: resolveApp('react-server/index.js'),
 	appPackageJson: resolveApp('package.json'),
 	appSrc: resolveApp('src'),
 	yarnLockFile: resolveApp('yarn.lock'),
@@ -132,6 +133,7 @@ module.exports = {
 	appPublic: resolveApp('public'),
 	appHtml: resolveApp('public/index.html'),
 	appIndexJs: resolveApp('src/pages/index/index.js'),
+	appServerIndexJs: resolveApp('react-server/index.js'),
 	appPackageJson: resolveApp('package.json'),
 	appSrc: resolveApp('src'),
 	yarnLockFile: resolveApp('yarn.lock'),
@@ -149,42 +151,3 @@ module.exports = {
 	prodImgCDN: cdnConfig.prodImgCDN,
 	prodMediaCDN: cdnConfig.prodMediaCDN
 };
-
-const ownPackageJson = require('../package.json');
-const reactScriptsPath = resolveApp(`node_modules/${ownPackageJson.name}`);
-const reactScriptsLinked =
-	fs.existsSync(reactScriptsPath) &&
-	fs.lstatSync(reactScriptsPath).isSymbolicLink();
-
-// config before publish: we're in ./packages/react-scripts/config/
-if (
-	!reactScriptsLinked &&
-	__dirname.indexOf(path.join('packages', 'react-scripts', 'config')) !== -1
-) {
-	module.exports = {
-		dotenv: resolveOwn('template/.env'),
-		appPath: resolveApp('.'),
-		appBuild: resolveOwn('../../build'),
-		appPublic: resolveOwn('template/public'),
-		appHtml: resolveOwn('template/public/index.html'),
-		appIndexJs: resolveOwn('template/src/pages/index/index.js'),
-		appPackageJson: resolveOwn('package.json'),
-		appSrc: resolveOwn('template/src'),
-		yarnLockFile: resolveOwn('template/yarn.lock'),
-		testsSetup: resolveOwn('template/src/setupTests.js'),
-		appNodeModules: resolveOwn('node_modules'),
-		publicUrl: getPublicUrl(resolveOwn('package.json')),
-		servedPath: getServedPath(resolveOwn('package.json')),
-		// These properties only exist before ejecting:
-		ownPath: resolveOwn('.'),
-		ownNodeModules: resolveOwn('node_modules'),
-
-
-		aliasConfig: aliasConfig,
-		prodJsCDN: cdnConfig.prodJsCDN,
-		prodCssCDN: cdnConfig.prodCssCDN,
-		prodImgCDN: cdnConfig.prodImgCDN,
-		prodMediaCDN: cdnConfig.prodMediaCDN
-	};
-}
-// @remove-on-eject-end
