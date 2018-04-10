@@ -114,6 +114,7 @@ module.exports = {
 	appNodeModules: resolveApp('node_modules'),
 	publicUrl: getPublicUrl(resolveApp('package.json')),
 	servedPath: getServedPath(resolveApp('package.json')),
+	appManifest: resolveApp('build/assets.json'),
 
 	aliasConfig: aliasConfig,
 	prodJsCDN: cdnConfig.prodJsCDN,
@@ -141,6 +142,7 @@ module.exports = {
 	appNodeModules: resolveApp('node_modules'),
 	publicUrl: getPublicUrl(resolveApp('package.json')),
 	servedPath: getServedPath(resolveApp('package.json')),
+	appManifest: resolveApp('build/assets.json'),
 	// These properties only exist before ejecting:
 	ownPath: resolveOwn('.'),
 	ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
