@@ -23,8 +23,12 @@ class Home extends React.Component {
 		}
 		this.state = cacheState || initState;
 	}
+	componentWillMount() {
+		console.log('WillMount');
+	}
 
 	componentDidMount() {
+		console.log('DidMount');
 		if (!CacheStore.get('HomeState')) {
 			// request.get(`${URLCONFIG.testUrl}`)
 			// 	.then((result) => {3

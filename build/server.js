@@ -20,7 +20,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9b1be7809628bbf219b0"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4f7b50e194d899cbc2ff"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -908,19 +908,15 @@ if(true) {
 /***/ }),
 
 /***/ "./react-server/index.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__server__ = __webpack_require__("./react-server/server.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_http__ = __webpack_require__("http");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_http___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_http__);
+// import app from './server';
+// import http from 'http';
+var http = __webpack_require__("http");
+var app = __webpack_require__("./react-server/server.js").default;
+var server = http.createServer(app.callback());
 
-
-
-var server = __WEBPACK_IMPORTED_MODULE_1_http___default.a.createServer(__WEBPACK_IMPORTED_MODULE_0__server__["default"].callback());
-
-var currentApp = __WEBPACK_IMPORTED_MODULE_0__server__["default"];
+var currentApp = app;
 
 server.listen(Object({"NODE_ENV":"development","PUBLIC_URL":""}).PORT || 3003, function (error) {
   if (error) {
@@ -933,99 +929,14 @@ server.listen(Object({"NODE_ENV":"development","PUBLIC_URL":""}).PORT || 3003, f
 if (true) {
   console.log('✅  Server-side HMR Enabled!');
 
-  module.hot.accept("./react-server/server.js", function(__WEBPACK_OUTDATED_DEPENDENCIES__) { /* harmony import */ __WEBPACK_IMPORTED_MODULE_0__server__ = __webpack_require__("./react-server/server.js"); (function () {
+  module.hot.accept("./react-server/server.js", function () {
     console.log('🔁  HMR Reloading `./server`...');
-    server.removeListener('request', currentApp);
     var newApp = __webpack_require__("./react-server/server.js").default;
-    server.on('request', newApp);
-    currentApp = newApp;
-  })(__WEBPACK_OUTDATED_DEPENDENCIES__); });
+    server.close();
+    server = http.createServer(newApp.callback());
+    server.listen(Object({"NODE_ENV":"development","PUBLIC_URL":""}).PORT || 3003);
+  });
 }
-
-// const koa = require('koa');
-// const koaRouter = require('koa-router');
-// const path = require('path');
-// const reactview = require('./app/plugin/reactview/app.js');
-// const VERSION = require('./app/assets/package.json').version;
-// //const Static = require('./app/middleware/static.js');
-// //const https=require('https');
-// //const querystring=require('querystring');
-// //const crypto = require('crypto');
-// //const fs = require('fs');
-
-// const App = () => {
-//   let app = koa();
-//   let router = koaRouter();
-//   let microdata = {
-//     styleDomain: "/assets/",
-//     styleVersion: VERSION,
-//   };
-
-//   // 初始化 /home 路由 dispatch 的 generator
-//   router.get(['/', '/home'], function* () {
-//     // 执行 view 插件
-//     this.body = this.render('Home', {
-//       microdata: microdata
-//     }, true);
-//   });
-
-//   router.get('/device/:deviceID', function* () {
-//     // 执行 view 插件
-//     let deviceID = this.params.deviceID;
-//     this.body = this.render('Device', {
-//       isServer: true,
-//       microdata: microdata,
-//       mydata: {
-//         path: this.path,
-//         deviceID: deviceID,
-//       },
-//     }, false);
-//   });
-//   router.post('uploadFile',function* (){
-
-
-//   });
-
-//   app.use(router.routes()).use(router.allowedMethods());
-
-//   // 静态资源托管
-//   /*app.use(Static({
-//     staticOpts: {
-//       router: '/assets',               // 路由映射
-//       dir: `${__dirname}/app/assets`,  // 托管的目录
-//       maxage: 0,        // 设置 maxage，默认缓存一天
-//     },
-//     app: app,
-//   }));*/
-
-//   // 注入 reactview
-//   const viewpath = path.join(__dirname, 'app/views');
-
-//   app.config = {
-//     reactview: {
-//       viewpath: viewpath,             // the root directory of view files
-//       doctype: '<!DOCTYPE html>',
-//       extname: '.js',                 // view 层直接渲染文件名后缀
-//       beautify: false,                 // 是否需要对 DOM 结构进行格式化
-//       writeResp: false,               // 是否需要在 view 层直接输出
-//     },
-//   }
-//   reactview(app);
-
-//   return app;
-// };
-
-// const createApp = () => {
-//   const app = App();
-
-//   app.listen(3000, () => {
-//     console.log('3000 is listening!');
-//   });
-
-//   return app;
-// };
-
-// createApp();
 
 /***/ }),
 
@@ -1041,7 +952,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_dom_server__ = __webpack_require__("react-dom/server");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_dom_server___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_dom_server__);
-var _jsxFileName = 'c:\\work\\MayCli\\react-server\\server.js',
+var _jsxFileName = 'f:\\NodeSrc\\MayCli\\react-server\\server.js',
     _this = this;
 
 
@@ -1072,7 +983,7 @@ router.get('/', function (ctx, next) {
             __self: _this
         })
     ));
-    console.log('restarted4');
+    console.log('restarted68883');
     ctx.body = markup + '66';
 });
 
@@ -1213,7 +1124,7 @@ var map = new storeMap();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_router__);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _jsxFileName = 'c:\\work\\MayCli\\src\\components_common\\Header\\Header.js';
+var _jsxFileName = 'f:\\NodeSrc\\MayCli\\src\\components_common\\Header\\Header.js';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1325,7 +1236,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAOCAMAAADK
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__api_request__ = __webpack_require__("./src/api/request.js");
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _jsxFileName = 'c:\\work\\MayCli\\src\\components_common\\List\\List.js';
+var _jsxFileName = 'f:\\NodeSrc\\MayCli\\src\\components_common\\List\\List.js';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1509,7 +1420,7 @@ exports.push([module.i, ".lm-ui-cells {\n  font-size: 14px;\n  background-color:
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _jsxFileName = 'c:\\work\\MayCli\\src\\components_common\\List\\ListItem.js';
+var _jsxFileName = 'f:\\NodeSrc\\MayCli\\src\\components_common\\List\\ListItem.js';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1667,7 +1578,7 @@ module.exports = __webpack_require__.p + "static/media/logo.ee7cd8ed.svg";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__index_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__index_scss__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__img_logo_svg__ = __webpack_require__("./src/pages/index/components/HomeLogo/img/logo.svg");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__img_logo_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__img_logo_svg__);
-var _jsxFileName = 'c:\\work\\MayCli\\src\\pages\\index\\components\\HomeLogo\\index.js',
+var _jsxFileName = 'f:\\NodeSrc\\MayCli\\src\\pages\\index\\components\\HomeLogo\\index.js',
     _this = this;
 
 
@@ -1720,7 +1631,7 @@ exports.push([module.i, "/* rem famat */\n@-webkit-keyframes m-chrysanthemum-spi
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_api_store__ = __webpack_require__("./src/api/store.js");
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _jsxFileName = 'c:\\work\\MayCli\\src\\pages\\index\\containers\\Home\\Home.js';
+var _jsxFileName = 'f:\\NodeSrc\\MayCli\\src\\pages\\index\\containers\\Home\\Home.js';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1763,8 +1674,14 @@ var Home = function (_React$Component) {
 	}
 
 	_createClass(Home, [{
+		key: 'componentWillMount',
+		value: function componentWillMount() {
+			console.log('WillMount');
+		}
+	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
+			console.log('DidMount');
 			if (!__WEBPACK_IMPORTED_MODULE_7_api_store__["a" /* default */].get('HomeState')) {
 				// request.get(`${URLCONFIG.testUrl}`)
 				// 	.then((result) => {3
@@ -1791,7 +1708,7 @@ var Home = function (_React$Component) {
 					Item,
 					{ key: "_org_" + index, __source: {
 							fileName: _jsxFileName,
-							lineNumber: 47
+							lineNumber: 51
 						},
 						__self: _this2
 					},
@@ -1810,20 +1727,20 @@ var Home = function (_React$Component) {
 				'div',
 				{ className: 'body-ml', key: 'content', __source: {
 						fileName: _jsxFileName,
-						lineNumber: 59
+						lineNumber: 63
 					},
 					__self: this
 				},
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_HomeLogo__["a" /* default */], {
 					__source: {
 						fileName: _jsxFileName,
-						lineNumber: 60
+						lineNumber: 64
 					},
 					__self: this
 				}),
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_commons_Header_Header__["a" /* default */], { title: '\u6D4B\u8BD5\u4E00\u4E0B', __source: {
 						fileName: _jsxFileName,
-						lineNumber: 61
+						lineNumber: 65
 					},
 					__self: this
 				}),
@@ -1832,7 +1749,7 @@ var Home = function (_React$Component) {
 					{
 						__source: {
 							fileName: _jsxFileName,
-							lineNumber: 62
+							lineNumber: 66
 						},
 						__self: this
 					},

@@ -15,7 +15,7 @@ router.get('/', (ctx, next) => {
             <App />
         </StaticRouter>
     );
-    console.log('restarted4');
+    console.log('restarted68883');
     ctx.body = markup+'66';
 });
 
