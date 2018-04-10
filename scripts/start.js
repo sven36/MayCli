@@ -86,7 +86,7 @@ choosePort(HOST, DEFAULT_PORT)
 		//使用 API 时以监听模式启动
 		//它支持监听文件更新，在文件发生变化时重新编译
 		//在使用 Webpack 时监听模式默认是关闭的
-		const serverCompiler = compile(nodeServerConfig);
+		const serverCompiler = webpack(nodeServerConfig);
 		// Start our server webpack instance in watch mode.
 		serverCompiler.watch(
 			{
@@ -110,18 +110,18 @@ choosePort(HOST, DEFAULT_PORT)
 			proxyConfig,
 			urls.lanUrlForConfig
 		);
-		const devServer = new WebpackDevServer(compiler, serverConfig);
-		// Launch WebpackDevServer.
-		devServer.listen(port, HOST, err => {
-			if (err) {
-				return console.log(err);
-			}
-			if (isInteractive) {
-				clearConsole();
-			}
-			console.log(chalk.cyan('Starting the development server...\n'));
-			openBrowser(urls.localUrlForBrowser);
-		});
+		// const devServer = new WebpackDevServer(compiler, serverConfig);
+		// // Launch WebpackDevServer.
+		// devServer.listen(port, HOST, err => {
+		// 	if (err) {
+		// 		return console.log(err);
+		// 	}
+		// 	if (isInteractive) {
+		// 		clearConsole();
+		// 	}
+		// 	console.log(chalk.cyan('Starting the development server...\n'));
+		// 	openBrowser(urls.localUrlForBrowser);
+		// });
 
 		['SIGINT', 'SIGTERM'].forEach(function (sig) {
 			process.on(sig, function () {

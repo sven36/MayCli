@@ -5,6 +5,8 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
+const StartServerPlugin = require('start-server-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
@@ -12,13 +14,24 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 
+const publicUrl = '';
+// Get environment variables to inject into our app.
+const env = getClientEnvironment(publicUrl);
+
 module.exports = {
     //针对 Node.js，使用 require 语句加载 Chunk 代码
     target: 'node',
     watch: true,
     entry: ['webpack/hot/poll?300', paths.appServerIndexJs],
     devtool: 'cheap-module-source-map',
-    alias: paths.aliasConfig,
+    resolve: {
+        modules: ['node_modules', paths.appNodeModules].concat(
+            // It is guaranteed to exist because we tweak it in `env.js`
+            process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
+        ),
+        extensions: ['.web.js', '.mjs', '.js', '.json', '.web.jsx', '.jsx'],
+        alias: Object.assign(paths.aliasConfig, { 'webpack/hot/poll': require.resolve('webpack/hot/poll') }),
+    },
     output: {
         path: paths.appBuild,
         filename: 'server.js',
@@ -26,7 +39,17 @@ module.exports = {
     },
     //通过 externals 可以告诉 Webpack JavaScript 运行环境已经内置了那些全局变量，
     //针对这些全局变量不用打包进代码中而是直接使用全局变量。
-    externals: ['webpack/hot/poll?300'],
+    externals: [
+        nodeExternals({
+            whitelist: [
+                'webpack/hot/poll?300',
+                /\.(eot|woff|woff2|ttf|otf)$/,
+                /\.(svg|png|jpg|jpeg|gif|ico)$/,
+                /\.(mp4|mp3|ogg|swf|webp)$/,
+                /\.(css|scss|sass|sss|less)$/,
+            ].filter(x => x),
+        }),
+    ],
     module: {
         strictExportPresence: true,
         rules: [
@@ -70,7 +93,8 @@ module.exports = {
                     // Process JS with Babel.
                     {
                         test: /\.(js|jsx|mjs)$/,
-                        include: paths.appSrc,
+                        //服务端下的jsx也需要babel转换
+                        include: [paths.appSrc, paths.appServerIndexJs],
                         loader: require.resolve('babel-loader'),
                         options: {
                             // @remove-on-eject-begin
@@ -116,6 +140,45 @@ module.exports = {
                             }
                         ],
                     },
+                    // sass-loader
+                    {
+                        test: /\.scss$/,
+                        use: [
+                            // style-loader cannot be used in a non-browser environment
+                            // require.resolve('style-loader'),
+                            {
+                                loader: require.resolve('css-loader'),
+                                options: {
+                                    importLoaders: 2,
+                                },
+                            },
+                            {
+                                loader: require.resolve('postcss-loader'),
+                                options: {
+                                    // Necessary for external CSS imports to work
+                                    // https://github.com/facebookincubator/create-react-app/issues/2677
+                                    ident: 'postcss',
+                                    plugins: () => [
+                                        require('postcss-flexbugs-fixes'),
+                                        autoprefixer({
+                                            browsers: [
+                                                '>1%',
+                                                'last 0 versions',
+                                                'Firefox ESR',
+                                                'not ie < 9', // React doesn't support IE8 anyway
+                                            ]
+                                        }),
+                                    ],
+                                },
+                            },
+                            {
+                                loader: "sass-loader",
+                                options: {
+                                    includePaths: ["src/"]
+                                }
+                            }
+                        ]
+                    },
                     {
                         exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/, /\.(less)$/, /\.(re)$/, /\.(s?css|sass)$/,],
                         loader: require.resolve('file-loader'),
@@ -139,6 +202,10 @@ module.exports = {
         }),
         // Add hot module replacement
         new webpack.HotModuleReplacementPlugin(),
+        // Automatically start the server when we are done compiling
+        new StartServerPlugin({
+            name: 'server.js',
+        }),
         // Ignore assets.json to avoid infinite recompile bug
         new webpack.WatchIgnorePlugin([paths.appManifest]),
     ]
