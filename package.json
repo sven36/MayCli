@@ -1,6 +1,6 @@
 {
   "name": "xin-react-scripts",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "scripts for xin-react",
   "keywords": [
     "xin-react-scripts"
@@ -11,9 +11,6 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-router": "^3.0.5",
     "webpack-dev-server": "^3.1.1"
   },
   "dependencies": {
@@ -45,8 +42,6 @@
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
     "json-server": "^0.12.1",
-    "koa": "^2.5.0",
-    "koa-router": "^7.4.0",
     "node-sass": "^4.5.3",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
