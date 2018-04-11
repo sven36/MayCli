@@ -11,6 +11,7 @@
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
+const glob = require('glob');
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
@@ -32,6 +33,29 @@ function ensureSlash(path, needsSlash) {
 
 const getPublicUrl = appPackageJson =>
 	envPublicUrl || require(appPackageJson).homepage;
+
+
+const entriesFunc = function (globPath) {
+	let files = glob.sync(globPath);
+	let entries = {}, entry, dirname, basename;
+
+	for (let i = 0; i < files.length; i++) {
+		entry = files[i];
+		dirname = path.dirname(entry.replace(entry.split('/')[0] + '/', ''));
+		// basename = path.basename(entry, '.js');
+		// entries[path.join(dirname, basename)] = './' + entry;
+		basename = path.basename(entry);
+		entries[basename] = resolveApp(entry + '/index.js');
+	}
+	return entries;
+};
+
+let entriesMap = entriesFunc('src/pages/*');
+entriesMap['vendor'] = [
+    require.resolve(path.resolve('config/polyfills')),
+    'react', 'react-dom', 'prop-types',
+    'react-router',
+];
 
 // We use `PUBLIC_URL` environment variable or "homepage" field to infer
 // "public path" at which the app is served.
@@ -116,6 +140,7 @@ module.exports = {
 	servedPath: getServedPath(resolveApp('package.json')),
 	appManifest: resolveApp('build/assets.json'),
 
+	entriesMap: entriesMap,
 	aliasConfig: aliasConfig,
 	prodJsCDN: cdnConfig.prodJsCDN,
 	prodCssCDN: cdnConfig.prodCssCDN,
@@ -147,6 +172,7 @@ module.exports = {
 	ownPath: resolveOwn('.'),
 	ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
 
+	entriesMap: entriesMap,
 	aliasConfig: aliasConfig,
 	prodJsCDN: cdnConfig.prodJsCDN,
 	prodCssCDN: cdnConfig.prodCssCDN,

@@ -1,10 +1,11 @@
-const URL_PREFIX = process.env.NODE_ENV === 'development' ?
-    `//${window.location.host}` :
-    `//${window.location.host}`;
+//node下无window
+// const URL_PREFIX = process.env.NODE_ENV === 'development' ?
+//     `//${window.location.host}` :
+//     `//${window.location.host}`;
 const URLCONFIG={
     testUrl:'/test/aaa',
 };
 export {
-    URL_PREFIX,
+    // URL_PREFIX,
     URLCONFIG
 }

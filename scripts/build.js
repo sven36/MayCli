@@ -27,6 +27,7 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const config = require('../config/webpack.config.prod');
+const serverConfig = require('../config/webpack.config.server.prod');
 const paths = require('../config/paths');
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
@@ -67,13 +68,13 @@ measureFileSizesBeforeBuild(paths.appBuild)
         console.log(warnings.join('\n\n'));
         console.log(
           '\nSearch for the ' +
-            chalk.underline(chalk.yellow('keywords')) +
-            ' to learn more about each warning.'
+          chalk.underline(chalk.yellow('keywords')) +
+          ' to learn more about each warning.'
         );
         console.log(
           'To ignore, add ' +
-            chalk.cyan('// eslint-disable-next-line') +
-            ' to the line before.\n'
+          chalk.cyan('// eslint-disable-next-line') +
+          ' to the line before.\n'
         );
       } else {
         console.log(chalk.green('Compiled successfully.\n'));
@@ -113,6 +114,8 @@ function build(previousFileSizes) {
   console.log('Creating an optimized production build...');
 
   let compiler = webpack(config);
+  let serverCompiler = webpack(serverConfig);
+
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err) {
@@ -136,15 +139,46 @@ function build(previousFileSizes) {
         console.log(
           chalk.yellow(
             '\nTreating warnings as errors because process.env.CI = true.\n' +
-              'Most CI servers set it automatically.\n'
+            'Most CI servers set it automatically.\n'
           )
         );
         return reject(new Error(messages.warnings.join('\n\n')));
       }
-      return resolve({
-        stats,
-        previousFileSizes,
-        warnings: messages.warnings,
+
+      console.log(chalk.green('Compiled client successfully.'));
+      console.log('Compiling server...');
+      //server start
+      serverCompiler.run((err, serverStats) => {
+        if (err) {
+          reject(err);
+        }
+        const serverMessages = formatWebpackMessages(
+          serverStats.toJson({}, true)
+        );
+        if (serverMessages.errors.length) {
+          return reject(new Error(serverMessages.errors.join('\n\n')));
+        }
+        if (
+          process.env.CI &&
+          (typeof process.env.CI !== 'string' ||
+            process.env.CI.toLowerCase() !== 'false') &&
+          serverMessages.warnings.length
+        ) {
+          console.log(
+            chalk.yellow(
+              '\nTreating warnings as errors because process.env.CI = true.\n' +
+              'Most CI servers set it automatically.\n'
+            )
+          );
+          return reject(new Error(serverMessages.warnings.join('\n\n')));
+        }
+        console.log(chalk.green('Compiled server successfully.'));
+
+        return resolve({
+          stats,
+          previousFileSizes,
+          warnings: Object.assign({}, messages.warnings, serverMessages.warnings),
+        });
       });
     });
   });

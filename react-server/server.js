@@ -1,4 +1,4 @@
-import App from 'views/index/containers/Home/Home';
+import App from 'views/index/index';
 import React from 'react';
 import { StaticRouter } from 'react-router-dom';
 import { renderToString } from 'react-dom/server';

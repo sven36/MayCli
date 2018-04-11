@@ -5,7 +5,7 @@ import Header from 'commons/Header/Header';
 import List from 'commons/List/List';
 import HomeLogo from '../../components/HomeLogo';
 import request from 'api/request';
-// import { URLCONFIG } from 'config';
+import { URLCONFIG } from 'config';
 import CacheStore from 'api/store';
 
 const Item = List.Item;
@@ -23,26 +23,22 @@ class Home extends React.Component {
 		}
 		this.state = cacheState || initState;
 	}
-	componentWillMount() {
-		console.log('WillMount');
-	}
 
 	componentDidMount() {
-		console.log('DidMount');
 		if (!CacheStore.get('HomeState')) {
-			// request.get(`${URLCONFIG.testUrl}`)
-			// 	.then((result) => {3
-			// 		// var _newState = Object.assign({}, this.state);
-			// 		// var memUrl;
-			// 		// if (result) {
-			// 		// 	_newState.orgList = result;
-			// 		// 	CacheStore.set('HomeState', _newState);
-			// 		// } else {
-			// 		// 	_newState._showToast = true;
-			// 		// 	_newState._toastMessage = '请求机构信息失败，请返回重新进入~';
-			// 		// }
-			// 		// this.setState(_newState);
-			// 	})
+			request.get(`${URLCONFIG.testUrl}`)
+				.then((result) => {
+					var _newState = Object.assign({}, this.state);
+					var memUrl;
+					if (result) {
+						_newState.orgList = result;
+						CacheStore.set('HomeState', _newState);
+					} else {
+						_newState._showToast = true;
+						_newState._toastMessage = '请求机构信息失败，请返回重新进入~';
+					}
+					this.setState(_newState);
+				})
 		}
 	}
 
