@@ -1,7 +1,7 @@
 import routers from './routes/routers';
 
-const Koa = require('koa');
-const app = new Koa();
+const koa = require('koa');
+const app = new koa();
 
 // 注册路由；
 routers(app);

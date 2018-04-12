@@ -7,7 +7,7 @@ import HomeInfo from './containers/HomeInfo/HomeInfo';
 const Router = () => (
   <Switch>
     <Route exact path="/" component={Home} />
-    <Route exact path="/i2" component={HomeInfo} />
+    <Route exact path="/homeDetail" component={HomeInfo} />
   </Switch>
 );
 

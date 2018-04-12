@@ -1,6 +1,6 @@
 import React from 'react';
 import './Home.scss';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import Header from 'commons/Header/Header';
 import List from 'commons/List/List';
 import HomeLogo from '../../components/HomeLogo';
@@ -66,6 +66,7 @@ class Home extends React.Component {
 			<div className="body-ml" key="content" onClick={this.onClick}>
 				<HomeLogo />
 				<Header title="测试一下" />
+				<Link to="/homeDetail">Client Router homeDetail</Link>
 				<List>{orgList}</List>
 			</div>
 		)

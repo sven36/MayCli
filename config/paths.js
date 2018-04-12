@@ -138,7 +138,7 @@ module.exports = {
 	appNodeModules: resolveApp('node_modules'),
 	publicUrl: getPublicUrl(resolveApp('package.json')),
 	servedPath: getServedPath(resolveApp('package.json')),
-	appManifest: resolveApp('build/assets.json'),
+	appManifest: resolveApp('build/asset-manifest.json'),
 
 	//build时需要分包
 	entriesMap: entriesMap,
@@ -168,7 +168,7 @@ module.exports = {
 	appNodeModules: resolveApp('node_modules'),
 	publicUrl: getPublicUrl(resolveApp('package.json')),
 	servedPath: getServedPath(resolveApp('package.json')),
-	appManifest: resolveApp('build/assets.json'),
+	appManifest: resolveApp('build/asset-manifest.json'),
 	// These properties only exist before ejecting:
 	ownPath: resolveOwn('.'),
 	ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
