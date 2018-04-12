@@ -1,4 +1,15 @@
+import React from 'react';
+class Test extends React.Component {
+    componentWillMount() {
+        console.log('Info componentWillMount');
+    }
+    componentDidMount() {
+        console.log('Info componentDidMount');
+    }
 
-export default (props) => {
-    return <div className="ts">I am Test One</div>
+    render() {
+        return <div className="ts">I am Info</div>
+    }
 }
+
+export default Test;

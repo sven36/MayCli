@@ -6,15 +6,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 // import createHashHistory from 'history/lib/createHashHistory'
 import {
-    Route,
-    Router,
-    Redirect,
-    browserHistory
-} from 'react-router';
-// import containers IndexRedirect,
-// import App from './containers/App'
-import Home from './containers/Home/Home';
-import HomeInfo from './containers/HomeInfo/HomeInfo';
+    BrowserRouter
+} from 'react-router-dom';
+import Router from './routers';
 
 
 // 解决路由切换时页面滚动问题
@@ -38,10 +32,8 @@ import HomeInfo from './containers/HomeInfo/HomeInfo';
 const rootElement = document.getElementById('root');
 
 ReactDOM.render(
-    <Router history={browserHistory}>
-        <Route path="/" component={Home}></Route>
-        <Route path="/i" component={HomeInfo}></Route>
-        <Redirect from="*" to="/"></Redirect>
-    </Router>,
+    <BrowserRouter>
+        <Router />
+    </BrowserRouter>,
     rootElement
 )

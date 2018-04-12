@@ -20,7 +20,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0898e5ce36c5aae3d9b7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2a55eca5fed602b6d5d6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -675,7 +675,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = "http://localhost:3001/";
 /******/
 /******/ 	// __webpack_hash__
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
@@ -907,36 +907,128 @@ if(true) {
 
 /***/ }),
 
+/***/ "./react-server/Layout/layout.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = (function (markup, name) {
+  return '\n  <!DOCTYPE html>\n  <html>\n  <head>\n    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">\n    <meta name="format-detection" content="telephone=no">\n    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">\n    <meta name="wap-font-scale" content="no">\n    <meta content="white" name="apple-mobile-web-app-status-bar-style">\n    <meta content="yes" name="apple-mobile-web-app-capable">\n    <link rel="shortcut icon" href="http://localhost:3001/static/media/favicon.ico" />\n  </head>\n  <body>\n    <div id="root" class="st">' + markup + '</div>\n  <script>\n   window.__REDUX_DATA__ = ' + JSON.stringify('') + ';\n  </script>\n  <script src="http://localhost:3001/static/js/runtime.js"></script>\n  <script src="http://localhost:3001/static/js/vendor.js"></script>\n  <script src="http://localhost:3001/static/js/' + name + '.js"></script>\n  </body>\n  </html>\n';
+});;
+
+/***/ }),
+
 /***/ "./react-server/index.js":
 /***/ (function(module, exports, __webpack_require__) {
 
-// import app from './server';
-// import http from 'http';
+
 var http = __webpack_require__("http");
 var app = __webpack_require__("./react-server/server.js").default;
 var server = http.createServer(app.callback());
+var IS_DEV =  true ? true : false;
+var DEFAULT_PORT = Object({"NODE_ENV":"development","PUBLIC_URL":""}).PORT || 3000;
 
-var currentApp = app;
-
-server.listen(Object({"NODE_ENV":"development","PUBLIC_URL":""}).PORT || 3003, function (error) {
-  if (error) {
-    console.log(error);
-  }
-
-  console.log('🚀 started');
+server.listen(DEFAULT_PORT, function (error) {
+	if (error) {
+		console.log(error);
+	}
+	if (IS_DEV) {
+		var openBrowser = __webpack_require__("react-dev-utils/openBrowser");
+		openBrowser('http://localhost:3000');
+		console.log('🚀 started');
+	}
 });
 
 if (true) {
-  console.log('✅  Server-side HMR Enabled!');
+	console.log('✅  Server-side HMR Enabled!');
 
-  module.hot.accept("./react-server/server.js", function () {
-    console.log('🔁  HMR Reloading `./server`...');
-    var newApp = __webpack_require__("./react-server/server.js").default;
-    server.close();
-    server = http.createServer(newApp.callback());
-    server.listen(Object({"NODE_ENV":"development","PUBLIC_URL":""}).PORT || 3003);
-  });
+	module.hot.accept("./react-server/server.js", function () {
+		console.log('🔁  HMR Reloading `./server`...');
+		var newApp = __webpack_require__("./react-server/server.js").default;
+		server.close();
+		server = http.createServer(newApp.callback());
+		server.listen(DEFAULT_PORT);
+	});
 }
+
+/***/ }),
+
+/***/ "./react-server/routes/routers.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_views_index_routers__ = __webpack_require__("./src/pages/index/routers.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_views_info_routers__ = __webpack_require__("./src/pages/info/routers.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react__ = __webpack_require__("react");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_router_dom__ = __webpack_require__("react-router-dom");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_router_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom_server__ = __webpack_require__("react-dom/server");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom_server___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_dom_server__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Layout_layout__ = __webpack_require__("./react-server/Layout/layout.js");
+var _jsxFileName = 'c:\\work\\MayCli\\react-server\\routes\\routers.js';
+
+
+
+
+
+
+
+
+var router = __webpack_require__("koa-router")();
+
+/* harmony default export */ __webpack_exports__["default"] = (function (app) {
+    var _this = this;
+
+    router.get('/*', function (ctx, next) {
+        var markup;
+        var bundle = 'index';
+        var url = ctx.url;
+        console.log('ctx.url:' + url);
+        switch (url) {
+            case '/info':
+                markup = Object(__WEBPACK_IMPORTED_MODULE_4_react_dom_server__["renderToString"])(__WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["StaticRouter"],
+                    { location: ctx.url, context: {}, __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 20
+                        },
+                        __self: _this
+                    },
+                    __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_views_info_routers__["a" /* default */], {
+                        __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 21
+                        },
+                        __self: _this
+                    })
+                ));
+                bundle = 'info';
+            default:
+                markup = Object(__WEBPACK_IMPORTED_MODULE_4_react_dom_server__["renderToString"])(__WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["StaticRouter"],
+                    { location: ctx.url, context: {}, __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 27
+                        },
+                        __self: _this
+                    },
+                    __WEBPACK_IMPORTED_MODULE_2_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_views_index_routers__["a" /* default */], {
+                        __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 28
+                        },
+                        __self: _this
+                    })
+                ));
+                break;
+        }
+        console.log('restarted');
+        ctx.body = Object(__WEBPACK_IMPORTED_MODULE_5__Layout_layout__["a" /* default */])(markup, bundle);
+    });
+
+    app.use(router.routes()).use(router.allowedMethods());
+});
 
 /***/ }),
 
@@ -945,49 +1037,13 @@ if (true) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_views_index_index__ = __webpack_require__("./src/pages/index/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__("react");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__("react-router-dom");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_dom_server__ = __webpack_require__("react-dom/server");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_dom_server___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_dom_server__);
-var _jsxFileName = 'c:\\work\\MayCli\\react-server\\server.js',
-    _this = this;
-
-
-
-
-
-
+// import routers from './routes/routers';
 var Koa = __webpack_require__("koa");
-var Router = __webpack_require__("koa-router");
 var app = new Koa();
-var router = new Router();
+var routers = __webpack_require__("./react-server/routes/routers.js").default;
 
-router.get('/', function (ctx, next) {
-    var markup = Object(__WEBPACK_IMPORTED_MODULE_3_react_dom_server__["renderToString"])(__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-        __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["StaticRouter"],
-        {
-            __source: {
-                fileName: _jsxFileName,
-                lineNumber: 14
-            },
-            __self: _this
-        },
-        __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_0_views_index_index__["default"], {
-            __source: {
-                fileName: _jsxFileName,
-                lineNumber: 15
-            },
-            __self: _this
-        })
-    ));
-    console.log('restarted68883');
-    ctx.body = markup + '66';
-});
-
-app.use(router.routes()).use(router.allowedMethods());
+// 注册路由；
+routers(app);
 
 /* harmony default export */ __webpack_exports__["default"] = (app);
 
@@ -1120,8 +1176,6 @@ var map = new storeMap();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Header_scss__ = __webpack_require__("./src/components_common/Header/Header.scss");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Header_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__Header_scss__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router__ = __webpack_require__("react-router");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_router__);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _jsxFileName = 'c:\\work\\MayCli\\src\\components_common\\Header\\Header.js';
@@ -1136,7 +1190,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-
+// import { hashHistory } from 'react-router';
 
 var Header = function (_React$Component) {
     _inherits(Header, _React$Component);
@@ -1153,7 +1207,7 @@ var Header = function (_React$Component) {
             if (this.props.back) {
                 this.props.back();
             } else {
-                __WEBPACK_IMPORTED_MODULE_2_react_router__["hashHistory"].go(-1);
+                // hashHistory.go(-1);
             }
         }
     }, {
@@ -1565,7 +1619,7 @@ ListItem.Brief = Brief;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return URLCONFIG; });
+/* unused harmony export URLCONFIG */
 //node下无window
 // const URL_PREFIX = process.env.NODE_ENV === 'development' ?
 //     `//${window.location.host}` :
@@ -1687,42 +1741,53 @@ var Home = function (_React$Component) {
 			cacheState._showDialog = 0;
 		}
 		_this.state = cacheState || initState;
+		_this.onClick = _this.onClick.bind(_this);
 		return _this;
 	}
 
 	_createClass(Home, [{
+		key: 'componentWillMount',
+		value: function componentWillMount() {
+			console.log('Home componentWillMount');
+		}
+	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			var _this2 = this;
-
+			console.log('Home componentDidMount');
 			if (!__WEBPACK_IMPORTED_MODULE_8_api_store__["a" /* default */].get('HomeState')) {
-				__WEBPACK_IMPORTED_MODULE_6_api_request__["a" /* default */].get('' + __WEBPACK_IMPORTED_MODULE_7_config__["a" /* URLCONFIG */].testUrl).then(function (result) {
-					var _newState = Object.assign({}, _this2.state);
-					var memUrl;
-					if (result) {
-						_newState.orgList = result;
-						__WEBPACK_IMPORTED_MODULE_8_api_store__["a" /* default */].set('HomeState', _newState);
-					} else {
-						_newState._showToast = true;
-						_newState._toastMessage = '请求机构信息失败，请返回重新进入~';
-					}
-					_this2.setState(_newState);
-				});
+				// request.get(`${URLCONFIG.testUrl}`)
+				// 	.then((result) => {
+				// 		var _newState = Object.assign({}, this.state);
+				// 		var memUrl;
+				// 		if (result) {
+				// 			_newState.orgList = result;
+				// 			CacheStore.set('HomeState', _newState);
+				// 		} else {
+				// 			_newState._showToast = true;
+				// 			_newState._toastMessage = '请求机构信息失败，请返回重新进入~';
+				// 		}
+				// 		this.setState(_newState);
+				// 	})
 			}
+		}
+	}, {
+		key: 'onClick',
+		value: function onClick() {
+			alert('clicked');
 		}
 	}, {
 		key: 'getOrgList',
 		value: function getOrgList(orgList) {
-			var _this3 = this;
+			var _this2 = this;
 
 			return orgList.map(function (item, index) {
 				return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 					Item,
 					{ key: "_org_" + index, __source: {
 							fileName: _jsxFileName,
-							lineNumber: 47
+							lineNumber: 54
 						},
-						__self: _this3
+						__self: _this2
 					},
 					item.title
 				);
@@ -1737,22 +1802,22 @@ var Home = function (_React$Component) {
 			}
 			return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
 				'div',
-				{ className: 'body-ml', key: 'content', __source: {
+				{ className: 'body-ml', key: 'content', onClick: this.onClick, __source: {
 						fileName: _jsxFileName,
-						lineNumber: 59
+						lineNumber: 66
 					},
 					__self: this
 				},
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_HomeLogo__["a" /* default */], {
 					__source: {
 						fileName: _jsxFileName,
-						lineNumber: 60
+						lineNumber: 67
 					},
 					__self: this
 				}),
 				__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_commons_Header_Header__["a" /* default */], { title: '\u6D4B\u8BD5\u4E00\u4E0B', __source: {
 						fileName: _jsxFileName,
-						lineNumber: 61
+						lineNumber: 68
 					},
 					__self: this
 				}),
@@ -1761,7 +1826,7 @@ var Home = function (_React$Component) {
 					{
 						__source: {
 							fileName: _jsxFileName,
-							lineNumber: 62
+							lineNumber: 69
 						},
 						__self: this
 					},
@@ -1801,99 +1866,231 @@ exports.push([module.i, "@charset \"UTF-8\";\nbody {\n  background: #ffffff; }\n
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("react");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _jsxFileName = "c:\\work\\MayCli\\src\\pages\\index\\containers\\HomeInfo\\HomeInfo.js",
-    _this = this;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HomeInfo_scss__ = __webpack_require__("./src/pages/index/containers/HomeInfo/HomeInfo.scss");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__HomeInfo_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__HomeInfo_scss__);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _jsxFileName = 'c:\\work\\MayCli\\src\\pages\\index\\containers\\HomeInfo\\HomeInfo.js';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (_typeof(call) === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + _typeof(superClass)); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 
 
-/* harmony default export */ __webpack_exports__["a"] = (function (props) {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "div",
-        { className: "ts", __source: {
-                fileName: _jsxFileName,
-                lineNumber: 4
-            },
-            __self: _this
-        },
-        "I am Test One"
-    );
-});
+
+var HomeInfo = function (_React$Component) {
+    _inherits(HomeInfo, _React$Component);
+
+    function HomeInfo() {
+        _classCallCheck(this, HomeInfo);
+
+        return _possibleConstructorReturn(this, (HomeInfo.__proto__ || Object.getPrototypeOf(HomeInfo)).apply(this, arguments));
+    }
+
+    _createClass(HomeInfo, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            console.log('HomeInfo render componentWillMount');
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            console.log('HomeInfo render componentDidMount');
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'ts', __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 13
+                    },
+                    __self: this
+                },
+                'I am HomeInfo'
+            );
+        }
+    }]);
+
+    return HomeInfo;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["a"] = (HomeInfo);
 
 /***/ }),
 
-/***/ "./src/pages/index/index.js":
+/***/ "./src/pages/index/containers/HomeInfo/HomeInfo.scss":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".ts {\n  height: 50px;\n  background-color: blue; }\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./src/pages/index/routers.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("react");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__("react-dom");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router__ = __webpack_require__("react-router");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_router__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom_Route__ = __webpack_require__("react-router-dom/Route");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom_Route___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_router_dom_Route__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom_Switch__ = __webpack_require__("react-router-dom/Switch");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom_Switch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_router_dom_Switch__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__containers_Home_Home__ = __webpack_require__("./src/pages/index/containers/Home/Home.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__containers_HomeInfo_HomeInfo__ = __webpack_require__("./src/pages/index/containers/HomeInfo/HomeInfo.js");
-var _jsxFileName = 'c:\\work\\MayCli\\src\\pages\\index\\index.js';
-//import base&&tool
-// import 'whatwg-fetch'
-// import 'assets/index.scss'
-// import 'tools/polyfill'
-
-
-// import createHashHistory from 'history/lib/createHashHistory'
-
-// import containers IndexRedirect,
-// import App from './containers/App'
+var _jsxFileName = 'c:\\work\\MayCli\\src\\pages\\index\\routers.js',
+    _this = this;
 
 
 
-// 解决路由切换时页面滚动问题
-// https://github.com/webpack/webpack/issues/1949
-// const history = createHashHistory();
 
-// history.listen(location => {
 
-//     setTimeout(() => {
 
-//        if (location.action === 'POP') {
-//             return;
-//         }
 
-//         window.scrollTo(0, 0);
-
-//     });
-
-// });
-
-var rootElement = document.getElementById('root');
-
-__WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-    __WEBPACK_IMPORTED_MODULE_2_react_router__["Router"],
-    { history: __WEBPACK_IMPORTED_MODULE_2_react_router__["browserHistory"], __source: {
-            fileName: _jsxFileName,
-            lineNumber: 41
-        },
-        __self: this
+var Router = function Router() {
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    __WEBPACK_IMPORTED_MODULE_2_react_router_dom_Switch___default.a,
+    {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 8
+      },
+      __self: _this
     },
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router__["Route"], { path: '/', component: __WEBPACK_IMPORTED_MODULE_3__containers_Home_Home__["a" /* default */], __source: {
-            fileName: _jsxFileName,
-            lineNumber: 42
-        },
-        __self: this
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom_Route___default.a, { exact: true, path: '/', component: __WEBPACK_IMPORTED_MODULE_3__containers_Home_Home__["a" /* default */], __source: {
+        fileName: _jsxFileName,
+        lineNumber: 9
+      },
+      __self: _this
     }),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router__["Route"], { path: '/i', component: __WEBPACK_IMPORTED_MODULE_4__containers_HomeInfo_HomeInfo__["a" /* default */], __source: {
-            fileName: _jsxFileName,
-            lineNumber: 43
-        },
-        __self: this
-    }),
-    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router__["Redirect"], { from: '*', to: '/', __source: {
-            fileName: _jsxFileName,
-            lineNumber: 44
-        },
-        __self: this
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom_Route___default.a, { exact: true, path: '/i2', component: __WEBPACK_IMPORTED_MODULE_4__containers_HomeInfo_HomeInfo__["a" /* default */], __source: {
+        fileName: _jsxFileName,
+        lineNumber: 10
+      },
+      __self: _this
     })
-), rootElement);
+  );
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (Router);
+
+/***/ }),
+
+/***/ "./src/pages/info/containers/Test/Test.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("react");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _jsxFileName = 'c:\\work\\MayCli\\src\\pages\\info\\containers\\Test\\Test.js';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (_typeof(call) === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + _typeof(superClass)); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var Test = function (_React$Component) {
+    _inherits(Test, _React$Component);
+
+    function Test() {
+        _classCallCheck(this, Test);
+
+        return _possibleConstructorReturn(this, (Test.__proto__ || Object.getPrototypeOf(Test)).apply(this, arguments));
+    }
+
+    _createClass(Test, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            console.log('Test componentWillMount');
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            console.log('Test componentDidMount');
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'ts', __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 11
+                    },
+                    __self: this
+                },
+                'I am Test'
+            );
+        }
+    }]);
+
+    return Test;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["a"] = (Test);
+
+/***/ }),
+
+/***/ "./src/pages/info/routers.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("react");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom_Route__ = __webpack_require__("react-router-dom/Route");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom_Route___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_router_dom_Route__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom_Switch__ = __webpack_require__("react-router-dom/Switch");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom_Switch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_router_dom_Switch__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__containers_Test_Test__ = __webpack_require__("./src/pages/info/containers/Test/Test.js");
+var _jsxFileName = 'c:\\work\\MayCli\\src\\pages\\info\\routers.js',
+    _this = this;
+
+
+
+
+
+
+var Router = function Router() {
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    __WEBPACK_IMPORTED_MODULE_2_react_router_dom_Switch___default.a,
+    {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 7
+      },
+      __self: _this
+    },
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom_Route___default.a, { exact: true, path: '/info', component: __WEBPACK_IMPORTED_MODULE_3__containers_Test_Test__["a" /* default */], __source: {
+        fileName: _jsxFileName,
+        lineNumber: 8
+      },
+      __self: _this
+    })
+  );
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (Router);
 
 /***/ }),
 
@@ -1934,10 +2131,10 @@ module.exports = require("react");
 
 /***/ }),
 
-/***/ "react-dom":
+/***/ "react-dev-utils/openBrowser":
 /***/ (function(module, exports) {
 
-module.exports = require("react-dom");
+module.exports = require("react-dev-utils/openBrowser");
 
 /***/ }),
 
@@ -1959,6 +2156,20 @@ module.exports = require("react-router");
 /***/ (function(module, exports) {
 
 module.exports = require("react-router-dom");
+
+/***/ }),
+
+/***/ "react-router-dom/Route":
+/***/ (function(module, exports) {
+
+module.exports = require("react-router-dom/Route");
+
+/***/ }),
+
+/***/ "react-router-dom/Switch":
+/***/ (function(module, exports) {
+
+module.exports = require("react-router-dom/Switch");
 
 /***/ })
 

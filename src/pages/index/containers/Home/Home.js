@@ -22,26 +22,33 @@ class Home extends React.Component {
 			cacheState._showDialog = 0;
 		}
 		this.state = cacheState || initState;
+		this.onClick = this.onClick.bind(this);
+	}
+	componentWillMount() {
+		console.log('Home componentWillMount');
 	}
 
 	componentDidMount() {
+		console.log('Home componentDidMount');
 		if (!CacheStore.get('HomeState')) {
-			request.get(`${URLCONFIG.testUrl}`)
-				.then((result) => {
-					var _newState = Object.assign({}, this.state);
-					var memUrl;
-					if (result) {
-						_newState.orgList = result;
-						CacheStore.set('HomeState', _newState);
-					} else {
-						_newState._showToast = true;
-						_newState._toastMessage = '请求机构信息失败，请返回重新进入~';
-					}
-					this.setState(_newState);
-				})
+			// request.get(`${URLCONFIG.testUrl}`)
+			// 	.then((result) => {
+			// 		var _newState = Object.assign({}, this.state);
+			// 		var memUrl;
+			// 		if (result) {
+			// 			_newState.orgList = result;
+			// 			CacheStore.set('HomeState', _newState);
+			// 		} else {
+			// 			_newState._showToast = true;
+			// 			_newState._toastMessage = '请求机构信息失败，请返回重新进入~';
+			// 		}
+			// 		this.setState(_newState);
+			// 	})
 		}
 	}
-
+	onClick() {
+		alert('clicked');
+	}
 	getOrgList(orgList) {
 		return orgList.map((item, index) => {
 			return <Item key={"_org_" + index}>
@@ -56,7 +63,7 @@ class Home extends React.Component {
 			orgList = this.getOrgList(this.state.orgList);
 		}
 		return (
-			<div className="body-ml" key="content">
+			<div className="body-ml" key="content" onClick={this.onClick}>
 				<HomeLogo />
 				<Header title="测试一下" />
 				<List>{orgList}</List>

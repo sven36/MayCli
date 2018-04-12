@@ -14,6 +14,11 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000;
+const CLIENT_PORT = DEFAULT_PORT + 1;
+const HOST = process.env.HOST || 'localhost';
+const publicPath = `http://${HOST}:${CLIENT_PORT}/`;
+
 const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
@@ -35,7 +40,7 @@ module.exports = {
     output: {
         path: paths.appBuild,
         filename: 'server.js',
-        publicPath: ''//本地host
+        publicPath: publicPath
     },
     //通过 externals 可以告诉 Webpack JavaScript 运行环境已经内置了那些全局变量，
     //针对这些全局变量不用打包进代码中而是直接使用全局变量。
