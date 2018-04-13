@@ -10,7 +10,14 @@ class HomeInfo extends React.Component {
     }
 
     render() {
-        return <div className="ts">I am HomeInfo</div>
+        return (
+            <div className="ts">
+                <ul>
+                    <li>HomeInfo</li>
+                    <li>HomeInfo2</li>
+                </ul>
+            </div>
+        )
     }
 }
 
