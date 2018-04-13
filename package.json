@@ -1,6 +1,6 @@
 {
   "name": "xin-react-scripts",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "scripts for xin-react",
   "keywords": [
     "xin-react-scripts"
@@ -57,7 +57,7 @@
     "whatwg-fetch": "2.0.3",
     "sockjs-client": "^1.1.4",
     "strip-ansi": "^4.0.0",
-    "webpack-dev-server": "^3.1.1",
+    "webpack-dev-server": "^2.9.4",
     "react-error-overlay": "^4.0.0"
   },
   "repository": {
