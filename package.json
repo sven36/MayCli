@@ -1,6 +1,6 @@
 {
   "name": "xin-react-scripts",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "scripts for xin-react",
   "keywords": [
     "xin-react-scripts"
@@ -39,9 +39,6 @@
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
     "json-server": "^0.12.1",
-    "koa": "^2.5.0",
-    "koa-router": "^7.4.0",
-    "node-fetch": "^2.1.2",
     "node-sass": "^4.5.3",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
