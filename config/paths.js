@@ -52,9 +52,9 @@ const entriesFunc = function (globPath) {
 
 let entriesMap = entriesFunc('src/pages/*');
 entriesMap['vendor'] = [
-    require.resolve(path.resolve('config/polyfills')),
-    'react', 'react-dom', 'prop-types',
-    'react-router',
+	require.resolve(path.resolve('config/polyfills')),
+	'react', 'react-dom', 'prop-types',
+	'react-router-dom',
 ];
 
 // We use `PUBLIC_URL` environment variable or "homepage" field to infer
@@ -138,8 +138,9 @@ module.exports = {
 	appNodeModules: resolveApp('node_modules'),
 	publicUrl: getPublicUrl(resolveApp('package.json')),
 	servedPath: getServedPath(resolveApp('package.json')),
-	appManifest: resolveApp('build/assets.json'),
+	appManifest: resolveApp('build/asset-manifest.json'),
 
+	//build时需要分包
 	entriesMap: entriesMap,
 	aliasConfig: aliasConfig,
 	prodJsCDN: cdnConfig.prodJsCDN,
@@ -167,11 +168,12 @@ module.exports = {
 	appNodeModules: resolveApp('node_modules'),
 	publicUrl: getPublicUrl(resolveApp('package.json')),
 	servedPath: getServedPath(resolveApp('package.json')),
-	appManifest: resolveApp('build/assets.json'),
+	appManifest: resolveApp('build/asset-manifest.json'),
 	// These properties only exist before ejecting:
 	ownPath: resolveOwn('.'),
 	ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
 
+	//build时需要分包
 	entriesMap: entriesMap,
 	aliasConfig: aliasConfig,
 	prodJsCDN: cdnConfig.prodJsCDN,
