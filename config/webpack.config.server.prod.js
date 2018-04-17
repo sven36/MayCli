@@ -26,7 +26,7 @@ module.exports = {
     //针对 Node.js，使用 require 语句加载 Chunk 代码
     target: 'node',
     entry: [paths.appServerIndexJs],
-    devtool: 'cheap-module-source-map',
+    devtool: 'source-map',
     resolve: {
         modules: ['node_modules', paths.appNodeModules].concat(
             // It is guaranteed to exist because we tweak it in `env.js`
@@ -99,14 +99,13 @@ module.exports = {
                         include: [paths.appSrc, paths.appServerIndexJs],
                         loader: require.resolve('babel-loader'),
                         options: {
-                            // @remove-on-eject-begin
-                            // babelrc: false,
-                            // presets: [require.resolve('babel-preset-react-app')],
-                            // @remove-on-eject-end
-                            // This is a feature of `babel-loader` for webpack (not Babel itself).
-                            // It enables caching results in ./node_modules/.cache/babel-loader/
-                            // directory for faster rebuilds.
-                            cacheDirectory: true,
+                            presets: [
+                                ["env", {
+                                    "targets": {
+                                        "node": "current"
+                                    }
+                                }]
+                            ]
                         },
                     },
                     // "postcss" loader applies autoprefixer to our CSS.
@@ -114,7 +113,7 @@ module.exports = {
                     // "style" loader turns CSS into JS modules that inject <style> tags.
                     // In production, we use a plugin to extract that CSS to a file, but
                     // in development "style" loader enables hot editing of CSS.
-                    {
+                    /*{
                         test: /\.css$/,
                         exclude: [paths.appBuild, /\.module\.css$/],
                         //style-loader在node环境下是不起作用的
@@ -141,7 +140,7 @@ module.exports = {
                                 },
                             }
                         ],
-                    },
+                    },*/
                     // sass-loader
                     {
                         test: /\.scss$/,
